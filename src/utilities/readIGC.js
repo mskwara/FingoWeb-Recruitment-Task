@@ -1,5 +1,6 @@
 const fetch = require("node-fetch");
-const readers = require("./readers");
+const { readers } = require("./readers");
+const axios = require("axios");
 
 const groupByFirstLetter = (data) => {
     return data.reduce((rv, x) => {
@@ -8,24 +9,36 @@ const groupByFirstLetter = (data) => {
     }, {});
 };
 
-const readIGC = async (link) => {
-    const igcData = await (await fetch(link)).text();
-    const lines = igcData.split("\n");
-    const records = groupByFirstLetter(lines);
-    for (let Hrecord of records.H) {
-        const reader = readers.filter((r) => Hrecord.startsWith(r.code))[0]; // get reader
-        if (reader) {
-            if (Hrecord.split(":")[1] !== undefined) {
-                // if there is something after ":"
-                console.log(reader.getData(Hrecord.split(":")[1]));
-            } else {
-                // if not process whole record
-                console.log(reader.getData(Hrecord));
+const readIGC = (igcData) => {
+    try {
+        const lines = igcData.split("\n");
+        const records = groupByFirstLetter(lines);
+
+        const headers = [];
+        for (let Hrecord of records.H) {
+            const reader = readers.filter((r) => Hrecord.startsWith(r.code))[0]; // get reader
+            if (reader) {
+                if (Hrecord.split(":")[1] !== undefined) {
+                    // if there is something after ":"
+                    headers.push(reader.getData(Hrecord.split(":")[1]));
+                } else {
+                    // if not process whole record
+                    headers.push(reader.getData(Hrecord));
+                }
             }
         }
+
+        const positions = [];
+        const reader = readers.filter((r) => r.code === "B")[0];
+        for (let Brecord of records.B) {
+            if (reader) {
+                positions.push(reader.getData(Brecord));
+            }
+        }
+        return { headers, positions };
+    } catch (err) {
+        console.log(err);
     }
 };
 
-readIGC(
-    "https://xcportal.pl/sites/default/files/tracks/2021-04-02/2021-04-02-xcs-aaa-011412629206.igc"
-);
+export default readIGC;

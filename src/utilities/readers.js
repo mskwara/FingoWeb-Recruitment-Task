@@ -1,4 +1,40 @@
-export default [
+const getLatitude = (text) => {
+    const degrees = parseInt(text.substr(0, 2));
+    const minutes = parseInt(text.substr(2, 2));
+    const seconds = ((parseInt(text.substr(4, 3)) * 1.0) / 1000) * 60;
+    const sign = text.substr(7, 1) === "N" ? -1 : 1;
+    return (degrees + minutes / 60 + seconds / 3600) * sign;
+};
+
+const getLongitude = (text) => {
+    const degrees = parseInt(text.substr(0, 3));
+    const minutes = parseInt(text.substr(3, 2));
+    const seconds = ((parseInt(text.substr(5, 3)) * 1.0) / 1000) * 60;
+    const sign = text.substr(7, 1) === "E" ? -1 : 1;
+    return (degrees + minutes / 60 + seconds / 3600) * sign;
+};
+
+module.exports.readers = [
+    {
+        code: "B",
+        getData: (record) => {
+            let value = record.substring(1); // get rid of "B"
+            const time = `${value.substr(0, 2)}:${value.substr(
+                2,
+                2
+            )}:${value.substr(4, 2)}`; // HH:MM:SS
+            value = value.substring(6); // get rid of time
+            const lat = value.substr(0, 8);
+            value = value.substring(8); // get rid of latitude
+            const lng = value.substr(0, 9);
+            const position = {
+                time,
+                lat: getLatitude(lat),
+                lng: getLongitude(lng),
+            };
+            return position;
+        },
+    },
     {
         code: "HFDTE",
         getData: (record) => {
