@@ -1,4 +1,5 @@
 const getLatitude = (text) => {
+    // translates text(ex. 5111520N) to decimal format
     const degrees = parseInt(text.substr(0, 2));
     const minutes = parseInt(text.substr(2, 2));
     const seconds = ((parseInt(text.substr(4, 3)) * 1.0) / 1000) * 60;
@@ -7,6 +8,7 @@ const getLatitude = (text) => {
 };
 
 const getLongitude = (text) => {
+    // translates text(ex. 01718142E) to decimal format
     const degrees = parseInt(text.substr(0, 3));
     const minutes = parseInt(text.substr(3, 2));
     const seconds = ((parseInt(text.substr(5, 3)) * 1.0) / 1000) * 60;
@@ -18,15 +20,13 @@ module.exports.readers = [
     {
         code: "B",
         getData: (record) => {
-            let value = record.substring(1); // get rid of "B"
+            const value = record.substring(1); // get rid of "B"
             const time = `${value.substr(0, 2)}:${value.substr(
                 2,
                 2
             )}:${value.substr(4, 2)}`; // HH:MM:SS
-            value = value.substring(6); // get rid of time
-            const lat = value.substr(0, 8);
-            value = value.substring(8); // get rid of latitude
-            const lng = value.substr(0, 9);
+            const lat = value.substr(6, 8);
+            const lng = value.substr(14, 9);
             const position = {
                 time,
                 lat: getLatitude(lat),

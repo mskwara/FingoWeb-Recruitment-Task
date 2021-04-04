@@ -21,8 +21,8 @@ const MapViewer = compose(
         defaultZoom={8}
         defaultCenter={
             positions && positions.length > 0
-                ? { lat: positions[0].lat, lng: positions[0].lng }
-                : { lat: -34.397, lng: 150.644 }
+                ? { lat: positions[0].lat, lng: positions[0].lng } // first received position
+                : { lat: -34.397, lng: 150.644 } // some default position
         }
     >
         {positions &&
