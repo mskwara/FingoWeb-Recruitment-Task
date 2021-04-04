@@ -45,7 +45,7 @@ const App = () => {
             </p>
             {data && data.headers && (
                 <>
-                    <h1>Headers:</h1>
+                    <h1>Flight information:</h1>
                     {data.headers.map((header, index) => (
                         <p key={index}>{header}</p>
                     ))}

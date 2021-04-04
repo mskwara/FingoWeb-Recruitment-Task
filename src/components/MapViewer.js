@@ -28,11 +28,14 @@ const MapViewer = compose(
     >
         {positions && (
             <>
-                <Marker position={positions[0]} title={positions[0].time} />
+                <Marker
+                    position={positions[0]}
+                    title={"Start: " + positions[0].time}
+                />
                 <Polyline path={positions} strokeColor="#00FF00" />
                 <Marker
                     position={positions[positions.length - 1]}
-                    title={positions[positions.length - 1].time}
+                    title={"End: " + positions[positions.length - 1].time}
                 />
             </>
         )}
