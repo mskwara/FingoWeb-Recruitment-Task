@@ -15,10 +15,11 @@ const App = () => {
     const processData = async () => {
         setLoading(true);
         const res = await axios.get(
+            // get igc file
             "http://localhost:8000/" + link.replaceAll("/", "%2F")
         );
         setLoading(false);
-        const { headers, positions } = readIGC(res.data);
+        const { headers, positions } = readIGC(res.data); // spread result of readIGC function into headers and positions
         setData({
             headers,
             positions,
@@ -35,13 +36,21 @@ const App = () => {
                 placeholder="Paste igc link"
             ></input>
             <button onClick={processData}>Display</button>
-            {data &&
-                data.headers &&
-                data.headers.map((header, index) => (
-                    <p key={index}>{header}</p>
-                ))}
+            {data && data.headers && (
+                <>
+                    <h1>Headers:</h1>
+                    {data.headers.map((header, index) => (
+                        <p key={index}>{header}</p>
+                    ))}
+                </>
+            )}
             {loading && "Loading..."}
-            {data && <MapViewer positions={data.positions} />}
+            {data && (
+                <>
+                    <h1>Map (limited free version):</h1>
+                    <MapViewer positions={data.positions} />
+                </>
+            )}
         </div>
     );
 };
