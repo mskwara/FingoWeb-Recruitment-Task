@@ -4,6 +4,7 @@ import {
     withGoogleMap,
     GoogleMap,
     Marker,
+    Polyline,
 } from "react-google-maps";
 
 const MapViewer = compose(
@@ -25,14 +26,16 @@ const MapViewer = compose(
                 : { lat: -34.397, lng: 150.644 } // some default position
         }
     >
-        {positions &&
-            positions.map((position, index) => (
+        {positions && (
+            <>
+                <Marker position={positions[0]} title={positions[0].time} />
+                <Polyline path={positions} strokeColor="#00FF00" />
                 <Marker
-                    position={{ lat: position.lat, lng: position.lng }}
-                    title={position.time}
-                    key={index}
+                    position={positions[positions.length - 1]}
+                    title={positions[positions.length - 1].time}
                 />
-            ))}
+            </>
+        )}
     </GoogleMap>
 ));
 

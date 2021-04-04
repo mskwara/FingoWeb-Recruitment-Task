@@ -13,10 +13,11 @@ const App = () => {
         setLink(event.target.value);
     };
     const processData = async () => {
+        console.log(process.env.REACT_APP_HOST);
         setLoading(true);
         const res = await axios.get(
             // get igc file
-            "http://localhost:8000/" + link.replaceAll("/", "%2F")
+            process.env.REACT_APP_HOST + link.replaceAll("/", "%2F")
         );
         setLoading(false);
         const { headers, positions } = readIGC(res.data); // spread result of readIGC function into headers and positions
