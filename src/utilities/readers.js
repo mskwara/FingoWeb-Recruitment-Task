@@ -12,7 +12,7 @@ const getLongitude = (text) => {
     const degrees = parseInt(text.substr(0, 3));
     const minutes = parseInt(text.substr(3, 2));
     const seconds = ((parseInt(text.substr(5, 3)) * 1.0) / 1000) * 60;
-    const sign = text.substr(7, 1) === "E" ? -1 : 1;
+    const sign = text.substr(8, 1) === "E" ? -1 : 1;
     return (degrees + minutes / 60 + seconds / 3600) * sign;
 };
 
