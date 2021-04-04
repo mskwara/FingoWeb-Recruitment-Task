@@ -11,7 +11,7 @@ app.get("/:link", async (req, res) => {
     res.send(igcRes.data);
 });
 
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+app.use(express.static(path.join(__dirname, "../../build")));
 
 const port = process.env.PORT || 8000;
 
