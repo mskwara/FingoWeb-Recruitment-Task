@@ -3,7 +3,7 @@ const getLatitude = (text) => {
     const degrees = parseInt(text.substr(0, 2));
     const minutes = parseInt(text.substr(2, 2));
     const seconds = ((parseInt(text.substr(4, 3)) * 1.0) / 1000) * 60;
-    const sign = text.substr(7, 1) === "N" ? -1 : 1;
+    const sign = text.substr(7, 1) === "N" ? 1 : -1;
     return (degrees + minutes / 60 + seconds / 3600) * sign;
 };
 
