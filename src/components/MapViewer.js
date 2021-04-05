@@ -11,7 +11,7 @@ const containerStyle = {
     height: "400px",
 };
 
-const MyComponent = ({ positions }) => {
+const MapViewer = ({ positions }) => {
     const { isLoaded, loadError } = useJsApiLoader({
         id: "google-map-script",
         googleMapsApiKey: process.env.REACT_APP_MAPS_API_KEY, // change variable in .env file
@@ -53,4 +53,4 @@ const MyComponent = ({ positions }) => {
     );
 };
 
-export default memo(MyComponent);
+export default memo(MapViewer);

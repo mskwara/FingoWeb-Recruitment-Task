@@ -54,74 +54,51 @@ module.exports.readers = [
     },
     {
         code: "HFPLT",
-        getData: (record) => {
-            return `Pilot in charge: ${record}`;
-        },
+        getData: (record) => `Pilot in charge: ${record}`,
     },
     {
         code: "HFCM2",
-        getData: (record) => {
-            return `Second pilot: ${record}`;
-        },
+        getData: (record) => `Second pilot: ${record}`,
     },
     {
         code: "HFGTY",
-        getData: (record) => {
-            return `Glider model: ${record}`;
-        },
+        getData: (record) => `Glider model: ${record}`,
     },
     {
         code: "HFGID",
-        getData: (record) => {
-            return `Glider registration number: ${record}`;
-        },
+        getData: (record) => `Glider registration number: ${record}`,
     },
     {
         code: "HFDTM",
-        getData: (record) => {
-            return `GPS datum: ${record}`;
-        },
+        getData: (record) => `GPS datum: ${record}`,
     },
     {
         code: "HFRFW",
-        getData: (record) => {
-            return `Firmware revision of the logger: ${record}`;
-        },
+        getData: (record) => `Firmware revision of the logger: ${record}`,
     },
     {
         code: "HFRHW",
-        getData: (record) => {
-            return `Hardware revision of the logger: ${record}`;
-        },
+        getData: (record) => `Hardware revision of the logger: ${record}`,
     },
     {
         code: "HFFTY",
-        getData: (record) => {
-            return `Logger manufacturer and model: ${record}`;
-        },
+        getData: (record) => `Logger manufacturer and model: ${record}`,
     },
     {
         code: "HFGPS",
-        getData: (record) => {
-            return `Manufacturer and model of the GPS receiver used in the logger: ${record}`;
-        },
+        getData: (record) =>
+            `Manufacturer and model of the GPS receiver used in the logger: ${record}`,
     },
     {
         code: "HFPRS",
-        getData: (record) => {
-            return `Pressure sensor used in the logger: ${record}`;
-        },
+        getData: (record) => `Pressure sensor used in the logger: ${record}`,
     },
     {
         code: "HFCID",
-        getData: (record) => {
-            return `The fin-number: ${record}`;
-        },
+        getData: (record) => `The fin-number: ${record}`,
     },
     {
         code: "HFCCL",
-        getData: (record) => {
-            return `Glider class: ${record}`;
-        },
+        getData: (record) => `Glider class: ${record}`,
     },
 ];
