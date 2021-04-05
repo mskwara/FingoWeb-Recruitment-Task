@@ -7,8 +7,13 @@ const path = require("path");
 app.use(cors());
 
 app.get("/:link", async (req, res) => {
-    const igcRes = await axios.get(req.params.link);
-    res.send(igcRes.data);
+    try {
+        const igcRes = await axios.get(req.params.link);
+        res.send(igcRes.data);
+    } catch (err) {
+        console.log(err);
+        res.send(null);
+    }
 });
 
 app.use(express.static(path.join(__dirname, "../../build")));

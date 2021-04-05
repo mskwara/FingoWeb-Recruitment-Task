@@ -16,17 +16,25 @@ const App = () => {
         setLink(event.target.value);
     };
     const processData = async () => {
+        if (link.slice(-4) !== ".igc") {
+            console.log("Wrong link!");
+            return;
+        }
         setLoading(true);
-        const res = await axios.get(
-            // get igc file
-            process.env.REACT_APP_HOST + link.replaceAll("/", "%2F")
-        );
-        setLoading(false);
-        const { headers, positions } = readIGC(res.data); // spread result of readIGC function into headers and positions
-        setData({
-            headers,
-            positions,
-        });
+        try {
+            const res = await axios.get(
+                // get igc file
+                process.env.REACT_APP_HOST + link.replaceAll("/", "%2F")
+            );
+            setLoading(false);
+            const { headers, positions } = readIGC(res.data); // spread result of readIGC function into headers and positions
+            setData({
+                headers,
+                positions,
+            });
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
@@ -46,7 +54,7 @@ const App = () => {
             <p className="hint">
                 https://xcportal.pl/sites/default/files/tracks/2021-04-04/2021-04-04-xtr-b67b5200ef90-011813799330.igc
             </p>
-            {loading && "Loading..."}
+            {loading && <p>Loading data...</p>}
 
             <h1>Flight information:</h1>
             {data.headers.length === 0 && <p>Insert your link first...</p>}

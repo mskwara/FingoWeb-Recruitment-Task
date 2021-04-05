@@ -9,6 +9,10 @@ const groupByFirstLetter = (data) => {
 
 const readIGC = (igcData) => {
     const lines = igcData.split("\r\n");
+    if (lines.length === 0) {
+        console.log("Empty file!");
+        return { headers: [], positions: [] };
+    }
     const records = groupByFirstLetter(lines); // grouped lines, example: { B: ["B1247...", ...], H: ["HFDTE040421", ...]}
 
     const headers = []; // list of translated data
