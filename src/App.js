@@ -6,7 +6,10 @@ import axios from "axios";
 
 const App = () => {
     const [link, setLink] = useState("");
-    const [data, setData] = useState(null);
+    const [data, setData] = useState({
+        headers: [],
+        positions: [],
+    });
     const [loading, setLoading] = useState(false);
 
     const onInput = (event) => {
@@ -43,21 +46,16 @@ const App = () => {
             <p className="hint">
                 https://xcportal.pl/sites/default/files/tracks/2021-04-04/2021-04-04-xtr-b67b5200ef90-011813799330.igc
             </p>
-            {data && data.headers && (
-                <>
-                    <h1>Flight information:</h1>
-                    {data.headers.map((header, index) => (
-                        <p key={index}>{header}</p>
-                    ))}
-                </>
-            )}
             {loading && "Loading..."}
-            {data && (
-                <>
-                    <h1>Map (limited free version):</h1>
-                    <MapViewer positions={data.positions} />
-                </>
-            )}
+
+            <h1>Flight information:</h1>
+            {data.headers.length === 0 && <p>Insert your link first...</p>}
+            {data.headers.map((header, index) => (
+                <p key={index}>{header}</p>
+            ))}
+
+            <h1>Map (limited free version):</h1>
+            <MapViewer positions={data.positions} />
         </div>
     );
 };

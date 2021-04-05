@@ -8,7 +8,7 @@ const groupByFirstLetter = (data) => {
 };
 
 const readIGC = (igcData) => {
-    const lines = igcData.split("\n");
+    const lines = igcData.split("\r\n");
     const records = groupByFirstLetter(lines); // grouped lines, example: { B: ["B1247...", ...], H: ["HFDTE040421", ...]}
 
     const headers = []; // list of translated data
@@ -16,9 +16,12 @@ const readIGC = (igcData) => {
         const reader = readers.filter((r) => Hrecord.startsWith(r.code))[0]; // get reader able to translate this header
         if (reader) {
             // if found
-            if (Hrecord.split(":")[1] !== undefined) {
-                // if there is something after ":"
-                headers.push(reader.getData(Hrecord.split(":")[1]));
+            if (Hrecord.indexOf(":") >= 0) {
+                // if there is ":"
+                if (Hrecord.indexOf(":") < Hrecord.length - 1) {
+                    //and there is something after ":"
+                    headers.push(reader.getData(Hrecord.split(":")[1]));
+                }
             } else {
                 // if not process whole record
                 headers.push(reader.getData(Hrecord));
